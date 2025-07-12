@@ -9,16 +9,40 @@ const App = () => {
   const [characterCount, setCharacterCount] = useState(0);
   const [sentenceCount, setSentenceCount] = useState(0);
 
+  const handleTextChange = (e) => {
+    const inputText = e.target.value
+    setText(inputText);
+
+    // calculate character
+
+      const characters = inputText.replace(/\s+/g, '');
+      setCharacterCount(characters.length);
+
+      // calculate sentence
+
+      const sentences = inputText.trim().split(/[.!?](\s|$)/).filter(sentence => sentence.trim().length > 0)
+      setSentenceCount(sentences.length);
+
+  }
+
+   const resetCounter = () => {
+    setText("");
+    setCharacterCount(0);
+    setSentenceCount(0);
+   }
+
   return (
     <div className='Container'>
       <div className='Container_middle'>
 
         <div className='right'>
           <textarea className='text-input'
+          value={text}
+          onChange={handleTextChange}
           rows="6"
           placeholder='Type or paste your text here...'/>
           <div className='button_div'>
-            <button className='button-65'>
+            <button className='button-65' onClick={resetCounter}>
               Delete
               </button>
           </div>
@@ -32,8 +56,8 @@ const App = () => {
 
             <div className='flex-container'>
               <div className='flex-container'>
-             <div><p><strong>Characters:</strong> 453 </p></div>
-             <div><p><strong>Sentences:</strong> 564 </p></div>
+             <div><p><strong>Characters:</strong> {characterCount} </p></div>
+             <div><p><strong>Sentences:</strong> {sentenceCount} </p></div>
             </div>
 
           
